@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href='{% static "polls/question_style.css" %}' />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <div class="button-nav">
+        <a href='{% url "polls:home" %}'>Home</a>
+        <a href="#">User</a>
+      </div>
+      <hr />
+    </nav>
+    <main>
+      <div class="field">
+        <a href='{% url "polls:home" %}'><button>Back</button></a>
+        <span class="user">User: {{question.question_author}}</span>
+        <h1>{{question.question_text}}</h1>
+        {% if question.choice_set.all %}
+        <ul>
+          {% for choice in question.choice_set.all %}
+          <li>{{choice.choice_text}}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <span class="error">No Choice</span>
+        {% endif %}
+      </div>
+    </main>
+  </body>
+</html>

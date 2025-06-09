@@ -43,40 +43,56 @@ main {
     flex: 1;
     display: flex;
     justify-content: center;
+
 }
 
-.polls {
-    position: relative;
+.field {
     display: flex;
     flex-direction: column;
     width: 50%;
     padding: 20px;
-    font-size: 2em;
 }
 
-.polls .create-question button {
-    cursor: pointer;
+.field a {
+    height: 5%;
+    width: 15%;
+}
+
+.field a button {
     width: 100%;
     height: 100%;
-    font-size: 1em;
+    font-size: large;
     border-radius: 25px;
-    border: 2px solid rgb(134, 134, 134);
+    background-color: #FFA8A8;
+    border: 3px solid #FF6363;
 }
 
-.polls .create-question button:hover {
-    border-color: rgb(94, 94, 243);
+.field a button:hover{
+    cursor: pointer;
+    border-color: #FF0C0C;
 }
 
-.polls h1 {
-    margin: 10px 0;
+.field .user {
+    font-size: 18px;
+    margin: 10px 0 0 0;
+    color: rgb(102, 102, 102)
 }
 
-.polls a.question-title {
-    margin: 0 20px;
+.field h1 {
+    font-size: 3em;
 }
 
-.polls a.question-title::before {
-    content: "•";
-    margin-right: 10px;
-    display: inline-block;
+.field ul {
+    margin-left: 2em;
+}
+
+.field ul li {
+    font-size: 24px;
+    margin: 5px 0;
+}
+
+.field .error {
+    margin: 0 auto;
+    color:red;
+    font-size: 6em;
 }
