@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href='{% static "polls/question_style.css" %}' />
+    <link rel="stylesheet" href='{% static "polls/css/question_style.css" %}' />
     <title>Document</title>
   </head>
   <body>
@@ -19,7 +19,30 @@
       <div class="field">
         <a href='{% url "polls:home" %}'><button>Back</button></a>
         <span class="user">User: {{question.question_author}}</span>
+        <form action='{%url "polls:question" question.pk %}' action="post">
+          <h1>{{question.question_text}}</h1>
+          <span class="votes">Votes: {{question.question_votes}}</span>
+          {% if question.choice_set.all %}
+          <div class="choice-list">
+            {% for choice in question.choice_set.all %}
+            <div>
+              <label for="choice{{forloop.counter}}"
+                >{{forloop.counter}}. {{choice.choice_text}}</label
+              >
+              <input
+                type="radio"
+                id="choice{{forloop.counter}}"
+                name="choice"
+              />
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <button type="submit">Send</button>
+        </form>
+
+        {% comment %}
         <h1>{{question.question_text}}</h1>
+        <span class="votes">Votes: {{question.question_votes}}</span>
         {% if question.choice_set.all %}
         <ul>
           {% for choice in question.choice_set.all %}
@@ -30,6 +53,7 @@
         <span class="error">No Choice</span>
         {% endif %}
       </div>
+      {% endcomment %}
     </main>
   </body>
 </html>
