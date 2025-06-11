@@ -11,7 +11,6 @@ function newInputChoice() {
         newChoice.name = 'choices';
 
         textCountChoices.textContent = countChoices + '/10';
-        console.log(countChoices < 6, countChoices)
         if (countChoices < 6) {
             textCountChoices.style.color = 'green'
         } else if (countChoices >= 6 && countChoices <= 8) {

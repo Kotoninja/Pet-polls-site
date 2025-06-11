@@ -1,3 +1,5 @@
+@import url('constants.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -15,6 +17,14 @@ body {
     flex-direction: column;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 nav {
     flex-shrink: 0;
 }
@@ -30,9 +40,14 @@ nav {
     margin: 0 50px 0 20px
 }
 
+.user-account {
+    text-decoration: line-through;
+    text-shadow: 0 0 10px red;    
+}
+
 nav hr {
     height: 10px;
-    background-color: green;
+    background-color: var(--primary-navigation-underline-color);
     width: 50%;
     margin: 0 auto;
     border-radius: 25px;
@@ -63,13 +78,13 @@ main {
     height: 100%;
     font-size: large;
     border-radius: 25px;
-    background-color: #FFA8A8;
-    border: 3px solid #ff6363;
+    background-color: var(--primary-back-button-color);
+    border: 3px solid var(--border-back-button-color);
 }
 
 .field a button:hover {
     cursor: pointer;
-    border-color: #FF0C0C;
+    border-color: var(--border-back-button-hover-color);
 }
 
 .field form {
@@ -92,12 +107,12 @@ form>div:nth-child(2) button {
     font-size: 30px;
     border: 3px solid;
     border-radius: 10px;
-    border-color: rgb(68, 148, 74, 0.4);
-    background-color: rgb(168, 228, 160);
+    border-color: var(--border-button-color);
+    background-color: var(--primary-button-color);
 }
 
 form>div:nth-child(2) button:hover {
-    border-color: rgba(32, 106, 69, 0.6);
+    border-color: var(--border-button-hover-color);
 }
 
 form label {
@@ -127,12 +142,12 @@ form .create-choice {
     font-size: 25px;
     border: 3px solid;
     border-radius: 10px;
-    border-color: rgb(68, 148, 74, 0.4);
-    background-color: rgb(168, 228, 160);
+    border-color: var(--border-button-color);
+    background-color: var(--primary-button-color);
 }
 
 form .create-choice:hover {
-    border-color: rgba(32, 106, 69, 0.6);
+    border-color: var(--border-button-hover-color);
 }
 
 form div.choices-list {

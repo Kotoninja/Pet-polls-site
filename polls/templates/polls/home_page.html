@@ -12,13 +12,15 @@
     <nav>
       <div class="button-nav">
         <a href='{% url "polls:home" %}'>Home</a>
-        <a href="#" title = 'page not available'>User</a>
+        <a href="#" title="page not available" class="user-account">User</a>
       </div>
       <hr />
     </nav>
     <main>
       <div class="polls">
-        <a class="create-question" href = '{% url "polls:create_question" %}'><button>Create question</button></a>
+        <a class="create-question" href='{% url "polls:create_question" %}'
+          ><button>Create question</button></a
+        >
         <h1>Questions:</h1>
         {% for question in all_quetions %}
         <a

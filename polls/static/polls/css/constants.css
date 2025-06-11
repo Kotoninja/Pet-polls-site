@@ -1,8 +1,22 @@
 :root {
+    /* main button site */
     --primary-button-color: rgb(168, 228, 160);
-    --border-button-color:  rgb(68, 148, 74, 0.4);
-    --border-button-color-hover: rgba(32, 106, 69, 0.6);
-    --primary-back-button-color:  rgb(255, 168, 168);
-    --border-back-button-color:  rgb(255, 99, 99);
-    --border-back-button-color-hover: rgb(255, 10, 10);
+    --border-button-color: rgb(68, 148, 74, 0.4);
+    --border-button-hover-color: rgba(32, 106, 69, 0.6);
+    /* button of exit */
+    --primary-back-button-color: rgb(255, 168, 168);
+    --border-back-button-color: rgb(255, 99, 99);
+    --border-back-button-hover-color: rgb(255, 10, 10);
+    /* error message */
+    --primary-error-message-color: rgb(255, 0, 0);
+    /* nav underline */
+    --primary-navigation-underline-color: rgb(0, 128, 0);
+    /* create question button */
+    --primary-create-question-button-color: rgb(212, 211, 206);
+    --border-create-question-button-color: rgb(134, 134, 134);
+    --primary-create-question-button-hover-color: rgb(204, 204, 252);
+    --second-primary-create-question-button-hover-color: rgb(187, 187, 252);
+    --border-create-question-button-hover-color: rgb(94, 94, 243);
+    /* optional information */
+    --optional-information-color: rgb(102, 102, 102);
 }
