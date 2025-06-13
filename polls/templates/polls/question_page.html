@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href='{% static "polls/css/question_style.css" %}' />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <title>Document</title>
+  <link rel="stylesheet" href='{% static "polls/css/constants.css" %}'>
+  <title>Question:{{question.question_text}}</title>
 </head>
 
 <body>
@@ -26,10 +27,6 @@
         <h1>{{question.question_text}}:</h1>
         <form action='{% url "polls:question" question.id%}' method="POST" name="change">
           {% csrf_token %}
-          <input type="hidden" name="edit">
-          <button type="button" class="edit" name = 'edit'>
-            <i class="bx bxs-pencil"></i>
-          </button>
           <input type="hidden" name="delete" value="{{question.pk}}" />
           <button type="button" class="delete" name="delete" value="{{question.pk}}">
             <i class="bx bxs-trash"></i>
@@ -45,7 +42,7 @@
           {% if choice.choice_text%}
           <div>
             <label for="choice{{forloop.counter}}">{{forloop.counter}}. {{choice.choice_text}}</label>
-            <input type="radio" id="choice{{forloop.counter}}" name="choice" />
+            <input type="radio" id="choice{{forloop.counter}}" name="choice" value={{choice.pk}}>
           </div>
           {% endif %}
           {% endfor %}
@@ -59,4 +56,5 @@
     </div>
   </main>
 </body>
+
 </html>
