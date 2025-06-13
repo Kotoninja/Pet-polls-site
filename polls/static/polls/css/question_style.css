@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+nav {
+    flex-shrink: 0;
+}
+
+.button-nav {
+    display: flex;
+    justify-content: center;
+    margin: 10px 20px 10px 20px;
+}
+
+.button-nav a {
+    font-size: 3em;
+    margin: 0 50px 0 20px;
+}
+
+.user-account {
+    text-decoration: line-through;
+    text-shadow: 0 0 10px red;
+}
+
+nav hr {
+    height: 10px;
+    background-color: var(--primary-navigation-underline-color);
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 25px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 20px;
+}
+
+.field a {
+    height: 5%;
+    width: 15%;
+    min-width: 50px;
+}
+
+.field a button {
+    width: 100%;
+    height: 100%;
+    font-size: large;
+    border-radius: 25px;
+    background-color: var(--primary-back-button-color);
+    border: 3px solid var(--border-back-button-color);
+}
+
+.field a button:hover {
+    cursor: pointer;
+    border-color: var(--border-back-button-hover-color);
+}
+
+.field .user {
+    font-size: 18px;
+    margin: 10px 0 0 0;
+    color: var(--optional-information-color);
+}
+
+.field .question-title {
+    display: flex;
+}
+
+.field .question-title h1 {
+    font-size: 3em;
+    margin-right: 10px;
+}
+
+.field .question-title button {
+    cursor: pointer;
+    border: none;
+    background-color: inherit;
+    height: 100%;
+    margin: 0 3px;
+}
+
+.field .question-title i {
+    font-size: 36px;
+    margin: 5px auto 0 auto;
+}
+
+.field .question-title .delete i:hover {
+    color: red;
+}
+
+.field .votes {
+    display: block;
+    color: var(--optional-information-color);
+}
+
+.field .choice-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+.field .choice-list div {
+    display: flex;
+}
+
+.field .choice-list label {
+    cursor: pointer;
+    font-size: 32px;
+    margin: 5px 0;
+}
+
+.field .choice-list input[type="radio"] {
+    margin: auto 0 auto 10px;
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+.field form button[type="submit"] {
+    width: 100%;
+    height: 48px;
+    font-size: 40px;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: 3px solid black;
+    background-color: var(--primary-button-color);
+    border-color: var(--border-button-color);
+}
+
+.field form button[type="submit"]:hover {
+    border-color: var(--border-button-hover-color);
+}
+
+.field .error {
+    margin: auto auto;
+    color: var(--primary-error-message-color);
+    font-size: 10em;
+    text-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+}
