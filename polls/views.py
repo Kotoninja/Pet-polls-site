@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
+from django.contrib.auth.decorators import login_required
 
 from .models import Question
 
@@ -59,8 +60,8 @@ def create_question(request):
             if choice:
                 new_question.choice_set.create(  # type: ignore
                     choice_text=choice,
-                )  
-                
+                )
+
         new_question.save()
 
         return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))

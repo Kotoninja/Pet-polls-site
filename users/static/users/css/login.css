@@ -4,7 +4,6 @@ body {
     align-items: center;
     justify-content: center;
     font-family: sans-serif;
-    line-height: 1.5;
     min-height: 100vh;
     background: #f3f3f3;
     flex-direction: column;
@@ -56,6 +55,27 @@ button {
     background-color: #4CAF50;
     width: 100%;
     font-size: 16px;
+}
+
+.error-message {
+    display: flex;
+    margin: 0 0 10px 0;
+    background-color: white;
+    padding: 5px;
+    justify-content: center;
+    border: 2px solid red;  
+    border-radius: 10px;
+}
+
+.error-message i {
+    font-size: 18px;
+    color: red;
+    margin: 0 2px 0 0;
+}
+
+.error-message span {
+    font-size: 18px;
+    color: red;
 }
 
 .wrap {

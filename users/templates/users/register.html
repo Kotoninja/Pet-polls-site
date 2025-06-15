@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href='{% static "users/css/register.css" %}' />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Register</title>
   </head>
 
@@ -29,7 +30,14 @@
         <label for="repassword">Re-type Password:</label>
         <input type="password" id="repassword" name="repassword"  required/>
 
-        <button type="submit">Submit|</button>
+        {% if error  %}
+        <div class = 'error-message'>
+          <i class='bx bxs-error-circle' ></i>
+          <span>{{error}}</span>
+        </div>
+        {% endif %}
+
+        <button type="submit">Submit</button>
       </form>
     </div>
   </body>
