@@ -12,11 +12,12 @@
         <h1>Pollster</h1>
         <h3>Enter your login credentials</h3>
 
-        <form action="">
-            <label for="first">
+        <form action="" method = 'post'>
+            {% csrf_token %}
+            <label for="username">
                 Username:
             </label>
-            <input type="text" id="first" name="first" 
+            <input type="text" id="username" name="username" 
                 placeholder="Enter your Username" required>
 
             <label for="password">
