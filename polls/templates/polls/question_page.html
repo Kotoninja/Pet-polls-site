@@ -14,11 +14,11 @@
 <body>
   <nav>
     <div class="button-nav">
-      <a href='{% url "polls:home" %}'>Home</a>
+      <a class = 'home' href='{% url "polls:home" %}'>Home</a>
       {% if  user.is_authenticated%}
-      <a href='{% url "users:profile" %}' title="page not available" class="user-account">{{user.username}}</a>
+      <a href='{% url "users:profile" %}' title="page not available" class="user-profile">{{user.username}}</a>
       {% else %}
-      <a href='{% url "users:profile" %}' class="user-account">Profile</a>      
+      <a href='{% url "users:profile" %}' class="user-profile">Profile</a>      
       {% endif %}    </div>
     <hr />
   </nav>

@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+nav {
+    flex-shrink: 0;
+}
+
+.button-nav {
+    display: flex;
+    justify-content: center;
+    margin: 10px 20px 10px 20px;
+}
+
+.button-nav a {
+    font-size: 3em;
+    margin: 0 50px 0 20px;
+}
+
+.user-profile {
+    text-decoration: underline dotted var(--primary-navigation-underline-);
+}
+
+nav hr {
+    height: 10px;
+    background-color: var(--primary-navigation-underline-color);
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 25px;
+}
+
+main {
+    display: flex;
+    flex:1;
+    justify-content: center;
+}
+
+.field {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+.field .user-info {
+    display: flex;
+    flex-direction: row;
+}
+.field .user-info .photo {
+    width: 30%;
+}
+
+.field .user-info img {
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+} 
+
+.field .user-info .data {
+    display: flex;
+    flex-direction: column;
+}

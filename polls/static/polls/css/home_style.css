@@ -38,6 +38,10 @@ nav {
     margin: 0 50px 0 20px;
 }
 
+.home {
+    text-decoration: underline dotted var(--primary-navigation-underline-color);
+}
+
 nav hr {
     height: 10px;
     background-color: var(--primary-navigation-underline-color);
