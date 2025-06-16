@@ -38,11 +38,6 @@ nav {
     margin: 0 50px 0 20px;
 }
 
-.user-account {
-    text-decoration: line-through;
-    text-shadow: 0 0 10px red;
-}
-
 nav hr {
     height: 10px;
     background-color: var(--primary-navigation-underline-color);

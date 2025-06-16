@@ -15,8 +15,11 @@
   <nav>
     <div class="button-nav">
       <a href='{% url "polls:home" %}'>Home</a>
-      <a href="#" title="page not available" class="user-account">User</a>
-    </div>
+      {% if  user.is_authenticated%}
+      <a href='{% url "users:profile" %}' title="page not available" class="user-account">{{user.username}}</a>
+      {% else %}
+      <a href='{% url "users:profile" %}' class="user-account">Profile</a>      
+      {% endif %}    </div>
     <hr />
   </nav>
   <main>
