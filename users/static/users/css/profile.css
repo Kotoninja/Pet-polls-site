@@ -52,7 +52,7 @@ nav hr {
 
 main {
     display: flex;
-    flex:1;
+    flex: 1;
     justify-content: center;
 }
 
@@ -61,10 +61,12 @@ main {
     width: 50%;
     flex-direction: column;
 }
+
 .field .user-info {
     display: flex;
     flex-direction: row;
 }
+
 .field .user-info .photo {
     width: 30%;
 }
@@ -73,7 +75,7 @@ main {
     height: 100%;
     width: 100%;
     border-radius: 25px;
-} 
+}
 
 .field .user-info .data {
     display: flex;

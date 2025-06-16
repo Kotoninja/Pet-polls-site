@@ -50,6 +50,8 @@ def user_register(request):
 @login_required
 def user_profile(request):
     context = {}
-    # logout(request)
-    #    return HttpResponse(f"{request.user.username}, {request.user.date_joined}")
+    if request.method == 'POST':
+        if request.POST.get('logout',False):
+            logout(request)
+            return redirect("polls:home")
     return render(request, "users/profile.html", context=context)

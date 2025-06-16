@@ -20,8 +20,12 @@ body {
     text-align: center;
 }
 
-h1 {
+h1 a {
+    font-size: 4em;
+    margin-bottom: 25px;
     color: #4CAF50;
+    text-decoration: none;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 label {
@@ -63,14 +67,15 @@ button {
     background-color: white;
     padding: 5px;
     justify-content: center;
-    border: 2px solid red;  
+    border: 2px solid red;
     border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
 }
 
 .error-message i {
     font-size: 18px;
     color: red;
-    margin: 0 2px 0 0;
+    margin: auto 0;
 }
 
 .error-message span {
