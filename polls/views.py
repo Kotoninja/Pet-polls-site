@@ -46,7 +46,7 @@ def question_window(request, question_id):
     question = {"question": get_object_or_404(Question, pk=question_id)}
     return render(request, "polls/question_page.html", context=question)
 
-
+@login_required
 def create_question(request):
     print()
     if request.method == "POST":

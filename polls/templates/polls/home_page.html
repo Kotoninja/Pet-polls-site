@@ -24,7 +24,9 @@
   </nav>
   <main>
     <div class="polls">
+      {% if user.is_authenticated %}
       <a class="create-question" href='{% url "polls:create_question" %}'><button>Create question</button></a>
+      {% endif %}
       <h1>Questions:</h1>
       {% for question in all_quetions %}
       <a class="question-title" href='{% url "polls:question" question.pk  %}'>
