@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href='{% static "users/css/profile.css" %}'>
+  <link rel="stylesheet" href='{% static "polls/css/constants.css" %}'>
+</head>
+
+<body>
+  <nav>
+    <div class="button-nav">
+      <a class='home' href='{% url "polls:home" %}'>Home</a>
+      {% if user.is_authenticated%}
+      <a href='{% url "users:profile" %}' class="user-profile">{{user.username}}</a>
+      {% else %}
+      <a href='{% url "users:profile" %}' class="user-profile">Profile</a>
+      {% endif %}
+    </div>
+    <hr />
+    <main>
+      <div class='field'>
+        <div class='user-info'>
+          <div class='photo'>
+            <img src="https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg" alt="user photo">
+          </div>
+          <div class='data'>
+            <span> Username: {{user.username}} </span>
+            <span> Date joined: {{ user.date_joined|date:"SHORT_DATE_FORMAT" }}</span>
+            <span> Count of created polls: {{count_created_of_polls}}</span>
+            <span> Count of answered polls: {{count_answered_of_polls}}</span>
+            <form action='' method='post'>
+              {% csrf_token %}
+              <input type="hidden" name="logout" value="True">
+              <button class = 'logout' type="submit">logout</button>
+            </form>
+          </div>
+        </div>
+        <hr class = 'profile-separator'>
+        <div class='user-activity'>
+          <p>USER POLLS:</p> 
+          <span> No Polls</span>
+        </div>
+      </div>
+    </main>
+  </nav>
+</body>
+
+</html>

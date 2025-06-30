@@ -7,15 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href='{% static "polls/css/question_style.css" %}' />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href='{% static "polls/css/constants.css" %}'>
+  <link rel="stylesheet" href='{% static "polls/css/constants.css" %}' />
   <title>Question:{{question.question_text}}</title>
 </head>
 
 <body>
   <nav>
     <div class="button-nav">
-      <a href='{% url "polls:home" %}'>Home</a>
-      <a href="#" title="page not available" class="user-account">User</a>
+      <a class="home" href='{% url "polls:home" %}'>Home</a>
+      {% if user.is_authenticated%}
+      <a href='{% url "users:profile" %}' class="user-profile">{{user.username}}</a>
+      {% else %}
+      <a href='{% url "users:profile" %}' class="user-profile">Profile</a>
+      {% endif %}
     </div>
     <hr />
   </nav>
@@ -23,8 +27,10 @@
     <div class="field">
       <a href='{% url "polls:home" %}'><button>Back</button></a>
       <span class="user">User: {{question.question_author}}</span>
+
       <div class="question-title">
         <h1>{{question.question_text}}:</h1>
+        {% if user.is_authenticated%}
         <form action='{% url "polls:question" question.id%}' method="POST" name="change">
           {% csrf_token %}
           <input type="hidden" name="delete" value="{{question.pk}}" />
@@ -32,7 +38,10 @@
             <i class="bx bxs-trash"></i>
           </button>
         </form>
+        {% endif %}
       </div>
+
+      {% if user.is_authenticated %}
       {% if question.choice_set.all%}
       <form action='{%url "polls:question" question.pk %}' method="post">
         {% csrf_token %}
@@ -42,15 +51,36 @@
           {% if choice.choice_text%}
           <div>
             <label for="choice{{forloop.counter}}">{{forloop.counter}}. {{choice.choice_text}}</label>
-            <input type="radio" id="choice{{forloop.counter}}" name="choice" value={{choice.pk}}>
+            <input type="radio" id="choice{{forloop.counter}}" name="choice" value="{{choice.pk}}" />
           </div>
           {% endif %}
           {% endfor %}
         </div>
-        <button type="submit">Send</button>
+        <button class="send" type="submit">Send</button>
       </form>
       {% else %}
       <span class="error">No Choice</span>
+      {% endif %}
+      {% else %}
+      {% if question.choice_set.all%}
+      <span class="votes">Votes: {{question.question_votes}}</span>
+      <div class="choice-list">
+        {% for choice in question.choice_set.all %}
+        {% if choice.choice_text%}
+        <div>
+          <label class="none-auth" for="choice{{forloop.counter}}">{{forloop.counter}}. {{choice.choice_text}}</label>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <form action='{% url "users:login" %}'>
+        <button class="send" onclick='{% url "users:login" %}'>Send</button>
+      </form>
+
+      {% else %}
+      <span class="error">No Choice</span>
+      {% endif %}
       {% endif %}
       <script src='{% static "polls/js/change_question.js" %}'></script>
     </div>
