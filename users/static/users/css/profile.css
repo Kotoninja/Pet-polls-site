@@ -39,7 +39,7 @@ nav {
 }
 
 .user-profile {
-    text-decoration: underline dotted var(--primary-navigation-underline-);
+    text-decoration: underline dotted var(--primary-navigation-underline-color);
 }
 
 nav hr {
@@ -60,6 +60,7 @@ main {
     display: flex;
     width: 50%;
     flex-direction: column;
+    margin: 10px 0 0 0;
 }
 
 .field .user-info {
@@ -78,6 +79,59 @@ main {
 }
 
 .field .user-info .data {
+    /* position: relative; */
+    display: flex;
+    min-height: 70%;
+    min-width: 70%;
+    flex-direction: column;
+}
+
+.field .user-info .data span {
+    font-size: 2em;
+    margin: 10px 10px 0 20px;
+}
+
+.field .user-info form {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+}
+
+.field .user-info .logout {
+    cursor: pointer;
+    float: right;
+    margin: 20px 20px 0 0;
+    width: 30%;
+    height: calc(30% + 16px);
+    font-size: large;
+    border-radius: 25px;
+    background-color: var(--primary-back-button-color);
+    border: 3px solid var(--border-back-button-color);
+}
+
+.field .user-info .logout:hover {
+    border-color: var(--border-back-button-hover-color);
+}
+
+.field .profile-separator {
+    height: 3px;
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 0;
+}
+
+.field .user-activity {
     display: flex;
     flex-direction: column;
+}
+
+.field .user-activity p {
+    font-size: 2em;
+}
+
+.field .user-activity span {
+    font-size: 5em;
+    margin: 0 auto;
+    color: red;
+    text-shadow: 0 0 15px rgba(255, 0, 0);
 }

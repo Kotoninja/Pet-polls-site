@@ -137,6 +137,10 @@ main {
     margin: 5px 0;
 }
 
+.field .choice-list .none-auth {
+    cursor: default;
+}
+
 .field .choice-list input[type="radio"] {
     margin: auto 0 auto 10px;
     transform: scale(1.3);

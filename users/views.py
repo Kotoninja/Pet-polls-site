@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import UserInfo
 
 User = get_user_model()
 
@@ -49,9 +50,17 @@ def user_register(request):
 
 @login_required
 def user_profile(request):
-    context = {}
-    if request.method == 'POST':
-        if request.POST.get('logout',False):
+    context = {
+        "count_created_of_polls": UserInfo.objects.get(
+            user=User.objects.get(pk=request.user.id)
+        ).count_created_of_polls,
+        "count_answered_of_polls": UserInfo.objects.get(
+            user=User.objects.get(pk=request.user.id)
+        ).count_answered_of_polls,
+    }
+
+    if request.method == "POST":
+        if request.POST.get("logout", False):
             logout(request)
             return redirect("polls:home")
     return render(request, "users/profile.html", context=context)

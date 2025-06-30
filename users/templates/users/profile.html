@@ -15,7 +15,7 @@
     <div class="button-nav">
       <a class='home' href='{% url "polls:home" %}'>Home</a>
       {% if user.is_authenticated%}
-      <a href='{% url "users:profile" %}' title="page not available" class="user-profile">{{user.username}}</a>
+      <a href='{% url "users:profile" %}' class="user-profile">{{user.username}}</a>
       {% else %}
       <a href='{% url "users:profile" %}' class="user-profile">Profile</a>
       {% endif %}
@@ -29,18 +29,20 @@
           </div>
           <div class='data'>
             <span> Username: {{user.username}} </span>
-            <span> Date joined: {{user.date_joined}}</span>
-            <span> Count of polls: </span>
-            <span> Number of survey responses:</span>
+            <span> Date joined: {{ user.date_joined|date:"SHORT_DATE_FORMAT" }}</span>
+            <span> Count of created polls: {{count_created_of_polls}}</span>
+            <span> Count of answered polls: {{count_answered_of_polls}}</span>
             <form action='' method='post'>
               {% csrf_token %}
               <input type="hidden" name="logout" value="True">
-              <button type="submit">logout</button>
+              <button class = 'logout' type="submit">logout</button>
             </form>
           </div>
         </div>
+        <hr class = 'profile-separator'>
         <div class='user-activity'>
-          <p>USER POLLS</p>
+          <p>USER POLLS:</p> 
+          <span> No Polls</span>
         </div>
       </div>
     </main>
