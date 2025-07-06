@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -44,20 +44,28 @@ def user_register(request):
                 email=user_email,
                 password=request.POST["password"],
             )
+
             return redirect("users:login")
     return render(request, "users/register.html", context=context)
 
 
 @login_required
-def user_profile(request):
-    context = {
-        "count_created_of_polls": UserInfo.objects.get(
-            user=User.objects.get(pk=request.user.id)
-        ).count_created_of_polls,
-        "count_answered_of_polls": UserInfo.objects.get(
-            user=User.objects.get(pk=request.user.id)
-        ).count_answered_of_polls,
-    }
+def user_profile(request, profile_nickname):
+    try:
+        user = User.objects.get(username=profile_nickname)
+
+        context = {
+            "user": user,
+            "count_created_of_polls": UserInfo.objects.get(
+                user=user
+            ).count_created_of_polls,
+            "count_answered_of_polls": UserInfo.objects.get(
+                user=user
+            ).count_answered_of_polls,
+        }
+
+    except User.DoesNotExist:
+        raise Http404
 
     if request.method == "POST":
         if request.POST.get("logout", False):
