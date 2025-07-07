@@ -54,33 +54,33 @@ def question_window(request, question_id):
 @login_required
 def create_question(request):
     context = {}
-    json_data = {'creator': request.user.username}
+    json_data = {"creator": request.user.username}
     context["json_data"] = json_data
 
-    # print(context)
     if request.method == "POST":
+        creator = request.POST.get("creator")
         question = request.POST.get("question")
         choices = request.POST.getlist("choices")
-        creator = request.POST.get("creator")
 
-        print(creator)
-        # new_question = Question.objects.create(question_text=question)
+        new_question = Question.objects.create(
+            question_author=creator, question_text=question
+        )
 
-        # print(choices)
-        # for choice in choices:
-        #     if choice:
-        #         new_question.choice_set.create(  # type: ignore
-        #             choice_text=choice,
-        #         )
+        for choice in choices:
+            if choice:
+                new_question.choice_set.create(  # type: ignore
+                    choice_text=choice,
+                )
 
-        # new_question.save()
+        new_question.save()
 
-        # udpate_the_user_created_filed = UserInfo.objects.get(user=request.user)
-        # udpate_the_user_created_filed.count_created_of_polls = (
-        #     F("count_created_of_polls") + 1
-        # )
-        # udpate_the_user_created_filed.save()
+        if creator == request.user.username:
+            udpate_the_user_created_filed = UserInfo.objects.get(user=request.user)
+            udpate_the_user_created_filed.count_created_of_polls = (
+                F("count_created_of_polls") + 1
+            )
+            udpate_the_user_created_filed.save()
 
-        # return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))
+        return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))
 
     return render(request, "polls/create_question.html", context=context)
