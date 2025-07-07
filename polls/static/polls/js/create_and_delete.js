@@ -1,8 +1,17 @@
+const jsonData = JSON.parse(document.getElementById("county-data").textContent)
+
 var textCountChoices = document.querySelector(".count-choices");
 var createButton = document.querySelector(".create-choice");
 var countChoices = 0;
+
+// Question creator
+var creatorName = jsonData.creator
+var creatorFild = document.querySelector(".creator");
+var creatorInput = document.querySelector("input[name='creator']")
+
 const listChoices = document.querySelector(".choices-list");
 const blankValuse = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 
 function changeColor() {
     if (countChoices < 6) {
@@ -49,11 +58,15 @@ function newInputChoice() {
         textCountChoices.style.color = changeColor();
 
         newChoiceDeleteButton.addEventListener("click", function () {
-            document.getElementById("choice-set" + newChoiceDeleteButton.value).remove();
-            countChoices--;
-            textCountChoices.textContent = countChoices + "/10";
-            textCountChoices.style.color = changeColor();
-            blankValuse.push(+newChoiceDeleteButton.value);
+            if (countChoices > 2) {
+                document.getElementById("choice-set" + newChoiceDeleteButton.value).remove();
+                countChoices--;
+                textCountChoices.textContent = countChoices + "/10";
+                textCountChoices.style.color = changeColor();
+                blankValuse.push(+newChoiceDeleteButton.value);
+            } else {
+                alert("Count number of choices at least two");
+            };
         });
 
         newPlace.append(newChoice);
@@ -64,4 +77,17 @@ function newInputChoice() {
     }
 }
 
+function changecreator() {
+    if (creatorInput.value === creatorName) {
+        creatorInput.value = 'Anonymous'
+        creatorFild.textContent = "User: " + creatorInput.value
+    } else {
+        creatorInput.value = creatorName
+        creatorFild.textContent = "User: " + creatorName
+    }
+};
+
+newInputChoice();
+newInputChoice();
 createButton.addEventListener("click", newInputChoice);
+creatorFild.addEventListener("click", changecreator)

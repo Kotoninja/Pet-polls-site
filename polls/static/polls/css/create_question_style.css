@@ -88,26 +88,12 @@ main {
     flex-direction: column;
 }
 
-form>div:nth-child(2) {
-    display: flex;
-    justify-content: space-between;
-}
-
-form>div:nth-child(2) button {
-    position: relative;
-    margin: auto 0;
-    height: 50%;
+form .creator {
     cursor: pointer;
-    width: 20%;
-    font-size: 30px;
-    border: 3px solid;
-    border-radius: 10px;
-    border-color: var(--border-button-color);
-    background-color: var(--primary-button-color);
-}
-
-form>div:nth-child(2) button:hover {
-    border-color: var(--border-button-hover-color);
+    margin: 10px 0 0 5px;
+    font-size: 24px;
+    color : var(--optional-information-color);
+    user-select: none;
 }
 
 form label {
@@ -148,6 +134,9 @@ form .create-choice:hover {
 form div.choices-list {
     display: flex;
     flex-direction: column;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 15px;
 }
 
 form div.choices-list div {
@@ -180,4 +169,21 @@ form div.choices-list div button i {
 
 form div.choices-list div button:hover i {
     color: red;
+}
+
+form button[type = 'submit'] {
+    position: relative;
+    margin: 25px 0 0 0;
+    height: 50%;
+    cursor: pointer;
+    width: 100%;
+    font-size: 30px;
+    border: 3px solid;
+    border-radius: 10px;
+    border-color: var(--border-button-color);
+    background-color: var(--primary-button-color);
+}
+
+form button[type = 'submit']:hover {
+    border-color: var(--border-button-hover-color);
 }
