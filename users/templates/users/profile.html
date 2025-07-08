@@ -21,34 +21,35 @@
       {% endif %}
     </div>
     <hr />
-    <main>
-      <div class='field'>
-        <div class='user-info'>
-          <div class='photo'>
-            <img src="https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg" alt="user photo">
-          </div>
-          <div class='data'>
-            <span> Username: {{user.username}} </span>
-            <span> Date joined: {{ user.date_joined|date:"d/m/Y" }}</span>
-            <span> Count of created polls: {{count_created_of_polls}}</span>
-            <span> Count of answered polls: {{count_answered_of_polls}}</span>
-            {% if user.pk == request.user.pk%}
-            <form action='' method='post'>
-              {% csrf_token %}
-              <input type="hidden" name="logout" value="True">
-              <button class = 'logout' type="submit">logout</button>
-            </form>
-            {% endif %}
-          </div>
+  </nav>
+  <main>
+    <div class='field'>
+      <div class='user-info'>
+        <div class='photo'>
+          <img src="https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg" alt="user photo">
         </div>
-        <hr class = 'profile-separator'>
-        <div class='user-activity'>
-          <p>USER POLLS:</p> 
-          <span> No Polls</span>
+        <div class='data'>
+          <span> Username: {{user.username}} </span>
+          <span> Date joined: {{ user.date_joined|date:"d/m/Y" }}</span>
+          <span> Count of created polls: {{count_created_of_polls}}</span>
+          <span> Count of answered polls: {{count_answered_of_polls}}</span>
+          {% if user.pk == request.user.pk%}
+          <form name = 'formLogout' method='post'>
+            {% csrf_token %}
+            <input type="hidden" name="logout" value="True">
+            <button class="logout" type = "button">logout</button>
+          </form>
+          {% endif %}
         </div>
       </div>
-    </main>
-  </nav>
+      <hr class='profile-separator'>
+      <div class='user-activity'>
+        <p>USER POLLS:</p>
+        <span> No Polls</span>
+      </div>
+    </div>
+    <script type='text/javascript' src='{% static "users/js/notification_to_logout.js" %}'></script>
+  </main>
 </body>
 
 </html>

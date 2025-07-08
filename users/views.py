@@ -21,7 +21,7 @@ def user_login(request):
             login(request, user)
             return redirect("polls:home")
         else:
-            context["error"] = "Invalid username or password entered"
+            context["err or"] = "Invalid username or password entered"
 
     return render(request, "users/login.html", context=context)
 
@@ -51,6 +51,11 @@ def user_register(request):
 
 @login_required
 def user_profile(request, profile_nickname):
+    """
+    TODO Show created polls of the user in his profile (Anonymous polls not show)
+    TODO Add a notification if the user wants to logout
+    TODO Photo editing system (until to 20th Jul)
+    """ 
     try:
         user = User.objects.get(username=profile_nickname)
 

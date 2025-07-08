@@ -1,26 +1,57 @@
+# django
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+# other
 import json
+
 
 # apps models
 from .models import Question
 from users.models import UserInfo
 
 
-def index(request):
+"""
+TODO Add comments in code
+"""
+
+def home(request):
+    """
+    TODO Add search field (until the 10th Jul)
+    TODO Add hashtag (until the 15th Jul)
+    """
     context = {"all_quetions": Question.objects.all()}
     return render(request, "polls/home_page.html", context=context)
 
 
-def question_window(request, question_id):
+def question_page(request, question_id):
+    context = {}
+
+    question = get_object_or_404(Question, pk=question_id)
+
+    context["question"] = question
+    if question.question_author != "Anonymous":
+        author = reverse(
+            "users:profile", kwargs={"profile_nickname": question.question_author}
+        )
+        context["author"] = author
+
     if request.method == "POST":
-        if request.POST.get(
-            "delete"
-        ):  # TODO in case delete question, the counter of created polls need decrease
+        if request.POST.get("delete"):
+            # Reducing count of created polls at user
+            created_polls = UserInfo.objects.get(
+                user=User.objects.get(username=question.question_author)
+            )
+            created_polls.count_created_of_polls = F("count_created_of_polls") - 1
+            created_polls.save()
+
+            # Delete question
             Question.objects.get(pk=question_id).delete()
+
             return HttpResponseRedirect(reverse("polls:home"))
 
         elif request.POST.get("choice"):
@@ -47,12 +78,15 @@ def question_window(request, question_id):
                 )
             )
 
-    question = {"question": get_object_or_404(Question, pk=question_id)}
-    return render(request, "polls/question_page.html", context=question)
+    return render(request, "polls/question_page.html", context=context)
 
 
 @login_required
 def create_question(request):
+    """
+    TODO Add field length counter question
+    TODO Rename and update js 
+    """
     context = {}
     json_data = {"creator": request.user.username}
     context["json_data"] = json_data
