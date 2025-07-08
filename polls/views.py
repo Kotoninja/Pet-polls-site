@@ -15,10 +15,6 @@ from .models import Question
 from users.models import UserInfo
 
 
-"""
-TODO Add comments in code
-"""
-
 def home(request):
     """
     TODO Add search field (until the 10th Jul)
@@ -29,6 +25,9 @@ def home(request):
 
 
 def question_page(request, question_id):
+    """
+    TODO update back button
+    """
     context = {}
 
     question = get_object_or_404(Question, pk=question_id)
@@ -55,6 +54,7 @@ def question_page(request, question_id):
             return HttpResponseRedirect(reverse("polls:home"))
 
         elif request.POST.get("choice"):
+            # Add 
             udpate_the_user_ans_filed = UserInfo.objects.get(user=request.user)
             udpate_the_user_ans_filed.count_answered_of_polls = (
                 F("count_answered_of_polls") + 1
@@ -85,7 +85,6 @@ def question_page(request, question_id):
 def create_question(request):
     """
     TODO Add field length counter question
-    TODO Rename and update js 
     """
     context = {}
     json_data = {"creator": request.user.username}

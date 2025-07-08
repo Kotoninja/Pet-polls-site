@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import UserInfo
+from polls.models import Question
 
 User = get_user_model()
 
@@ -52,10 +53,8 @@ def user_register(request):
 @login_required
 def user_profile(request, profile_nickname):
     """
-    TODO Show created polls of the user in his profile (Anonymous polls not show)
-    TODO Add a notification if the user wants to logout
     TODO Photo editing system (until to 20th Jul)
-    """ 
+    """
     try:
         user = User.objects.get(username=profile_nickname)
 
@@ -67,6 +66,7 @@ def user_profile(request, profile_nickname):
             "count_answered_of_polls": UserInfo.objects.get(
                 user=user
             ).count_answered_of_polls,
+            "question_list": Question.objects.filter(question_author=user.username),
         }
 
     except User.DoesNotExist:

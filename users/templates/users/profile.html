@@ -20,7 +20,7 @@
       <a href='{% url "users:login" %}' class="user-profile">Login</a>
       {% endif %}
     </div>
-    <hr />
+    <hr>
   </nav>
   <main>
     <div class='field'>
@@ -37,7 +37,7 @@
           <form name = 'formLogout' method='post'>
             {% csrf_token %}
             <input type="hidden" name="logout" value="True">
-            <button class="logout" type = "button">logout</button>
+            <button class="logout" type = "button">Logout</button>
           </form>
           {% endif %}
         </div>
@@ -45,7 +45,18 @@
       <hr class='profile-separator'>
       <div class='user-activity'>
         <p>USER POLLS:</p>
-        <span> No Polls</span>
+        {% if  question_list %}
+          <div class = "question-list-field">
+          {% for question in question_list  %}
+            <div class = "question">
+              <a href = '{% url "polls:question" question.pk%}'>{{question.question_text}}</a>
+              <span>Votes: {{question.question_votes}}</span>
+            </div>
+          {% endfor %}
+          </div>
+        {% else %}
+        <span class = "no-polls"> No polls</span>
+        {% endif %}
       </div>
     </div>
     <script type='text/javascript' src='{% static "users/js/notification_to_logout.js" %}'></script>

@@ -2,7 +2,7 @@ var form = document.forms.formLogout
 var logoutButton = document.querySelector(".logout")
 
 function confirmLogout() {
-    var action = confirm("You want to log out?")
+    var action = confirm("You want to logout?")
     if (action) {
         form.submit()
     }
