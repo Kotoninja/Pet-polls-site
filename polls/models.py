@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
+    question_text = models.CharField(max_length=50)
     question_votes = models.IntegerField(default=0)
     question_author = models.CharField(max_length=20, default="Anonymous")
 

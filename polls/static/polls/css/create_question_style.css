@@ -92,7 +92,7 @@ form .creator {
     cursor: pointer;
     margin: 10px 0 0 5px;
     font-size: 24px;
-    color : var(--optional-information-color);
+    color: var(--optional-information-color);
     user-select: none;
 }
 
@@ -107,6 +107,30 @@ form input {
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
+}
+
+form .question {
+    position: relative;
+    background-color: inherit;
+    bottom: 1;
+}
+
+form .question input {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding-right: 10%;
+}
+
+form .question-length-counter {
+    position: absolute;
+    font-size: 24px;
+    color:green;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* right:1; */
 }
 
 form .count-choices {
@@ -171,8 +195,7 @@ form div.choices-list div button:hover i {
     color: red;
 }
 
-form button[type = 'submit'] {
-    position: relative;
+form button[type='submit'] {
     margin: 25px 0 0 0;
     height: 50%;
     cursor: pointer;
@@ -184,6 +207,6 @@ form button[type = 'submit'] {
     background-color: var(--primary-button-color);
 }
 
-form button[type = 'submit']:hover {
+form button[type='submit']:hover {
     border-color: var(--border-button-hover-color);
 }

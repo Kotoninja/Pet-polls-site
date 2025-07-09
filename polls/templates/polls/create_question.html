@@ -32,7 +32,11 @@
         <label class="creator" for="creator">User: {{request.user.username}}</label>
         <input type="hidden" name="creator" value = {{request.user.username}}>
         <label for="question">Question:</label>
-        <input type="text" name="question" placeholder="Enter question" required />
+
+        <div class = "question">
+          <input type="text" name="question" placeholder="Enter question" required />
+          <span class = "question-length-counter"> 0/50</span>
+        </div>
         <label for="choices">Choices:</label>
         <span class="count-choices">0/10</span>
         <button class="create-choice" type="button">Create Choice</button>
@@ -44,6 +48,7 @@
   {{ json_data|json_script:"county-data"}}
   <script type="text/javascript" src='{% static "polls/js/create_question_add_remove_choice.js" %}'></script>
   <script type="text/javascript" src='{% static "polls/js/create_question_switch_user.js" %}'></script>
+  <script type="text/javascript" src='{% static "polls/js/create_question_question_length_counter.js" %}'></script>
 </body>
 
 </html>
