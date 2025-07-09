@@ -13,8 +13,8 @@ function changeColor() {
         return "orange";
     } else {
         return "red";
-    }
-}
+    };
+};
 
 function newInputChoice() {
     if (countChoices < 10) {
@@ -23,7 +23,7 @@ function newInputChoice() {
         // check for available id
         if (blankValuse.length != 0) {
             numberId = blankValuse.pop();
-        }
+        };
 
         // new div
         let newPlace = document.createElement("div");
