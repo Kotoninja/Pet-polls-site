@@ -1,10 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import UserInfo
+from polls.models import Question
 
 User = get_user_model()
 
@@ -21,7 +22,7 @@ def user_login(request):
             login(request, user)
             return redirect("polls:home")
         else:
-            context["error"] = "Invalid username or password entered"
+            context["err or"] = "Invalid username or password entered"
 
     return render(request, "users/login.html", context=context)
 
@@ -44,20 +45,32 @@ def user_register(request):
                 email=user_email,
                 password=request.POST["password"],
             )
+
             return redirect("users:login")
     return render(request, "users/register.html", context=context)
 
 
 @login_required
-def user_profile(request):
-    context = {
-        "count_created_of_polls": UserInfo.objects.get(
-            user=User.objects.get(pk=request.user.id)
-        ).count_created_of_polls,
-        "count_answered_of_polls": UserInfo.objects.get(
-            user=User.objects.get(pk=request.user.id)
-        ).count_answered_of_polls,
-    }
+def user_profile(request, profile_nickname):
+    """
+    TODO Photo editing system (until to 20th Jul)
+    """
+    try:
+        user = User.objects.get(username=profile_nickname)
+
+        context = {
+            "user": user,
+            "count_created_of_polls": UserInfo.objects.get(
+                user=user
+            ).count_created_of_polls,
+            "count_answered_of_polls": UserInfo.objects.get(
+                user=user
+            ).count_answered_of_polls,
+            "question_list": Question.objects.filter(question_author=user.username),
+        }
+
+    except User.DoesNotExist:
+        raise Http404
 
     if request.method == "POST":
         if request.POST.get("logout", False):

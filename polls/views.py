@@ -1,28 +1,57 @@
+# django
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+# other
+import json
+
 
 # apps models
 from .models import Question
 from users.models import UserInfo
 
 
-def index(request):
+def home(request):
+    """
+    TODO Add search field (until the 11th Jul)
+    TODO Add hashtag (until the 15th Jul)
+    """
     context = {"all_quetions": Question.objects.all()}
     return render(request, "polls/home_page.html", context=context)
 
 
-def question_window(request, question_id):
+def question_page(request, question_id):
+    context = {}
+
+    question = get_object_or_404(Question, pk=question_id)
+
+    context["question"] = question
+    if question.question_author != "Anonymous":
+        author = reverse(
+            "users:profile", kwargs={"profile_nickname": question.question_author}
+        )
+        context["author"] = author
+
     if request.method == "POST":
-        if request.POST.get(
-            "delete"
-        ):  # TODO in case delete question, the counter of created polls need decrease
+        if request.POST.get("delete"):
+            # Reducing count of created polls at user
+            created_polls = UserInfo.objects.get(
+                user=User.objects.get(username=question.question_author)
+            )
+            created_polls.count_created_of_polls = F("count_created_of_polls") - 1
+            created_polls.save()
+
+            # Delete question
             Question.objects.get(pk=question_id).delete()
+
             return HttpResponseRedirect(reverse("polls:home"))
 
         elif request.POST.get("choice"):
+            # Add 
             udpate_the_user_ans_filed = UserInfo.objects.get(user=request.user)
             udpate_the_user_ans_filed.count_answered_of_polls = (
                 F("count_answered_of_polls") + 1
@@ -46,19 +75,24 @@ def question_window(request, question_id):
                 )
             )
 
-    question = {"question": get_object_or_404(Question, pk=question_id)}
-    return render(request, "polls/question_page.html", context=question)
+    return render(request, "polls/question_page.html", context=context)
 
 
 @login_required
 def create_question(request):
+    context = {}
+    json_data = {"creator": request.user.username}
+    context["json_data"] = json_data
+
     if request.method == "POST":
+        creator = request.POST.get("creator")
         question = request.POST.get("question")
         choices = request.POST.getlist("choices")
 
-        new_question = Question.objects.create(question_text=question)
+        new_question = Question.objects.create(
+            question_author=creator, question_text=question
+        )
 
-        print(choices)
         for choice in choices:
             if choice:
                 new_question.choice_set.create(  # type: ignore
@@ -67,12 +101,13 @@ def create_question(request):
 
         new_question.save()
 
-        udpate_the_user_created_filed = UserInfo.objects.get(user=request.user)
-        udpate_the_user_created_filed.count_created_of_polls = (
-            F("count_created_of_polls") + 1
-        )
-        udpate_the_user_created_filed.save()
+        if creator == request.user.username:
+            udpate_the_user_created_filed = UserInfo.objects.get(user=request.user)
+            udpate_the_user_created_filed.count_created_of_polls = (
+                F("count_created_of_polls") + 1
+            )
+            udpate_the_user_created_filed.save()
 
         return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))
 
-    return render(request, "polls/create_question.html", context={})
+    return render(request, "polls/create_question.html", context=context)

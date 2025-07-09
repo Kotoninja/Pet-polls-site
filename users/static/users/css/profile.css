@@ -114,10 +114,11 @@ main {
 }
 
 .field .profile-separator {
-    height: 3px;
+    height: 4px;
     width: 100%;
-    margin: 10px 0;
+    margin: 35px 0;
     border-radius: 0;
+    background-color: var(--primary-navigation-underline-color)
 }
 
 .field .user-activity {
@@ -129,7 +130,31 @@ main {
     font-size: 2em;
 }
 
-.field .user-activity span {
+.field .question-list-field {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.field .question-list-field .question {
+    display: flex;
+    flex-direction: column;
+    padding: 7px;
+    border-radius: 10px;
+    border: 2px solid grey;
+    margin-bottom: 10px;
+}
+
+.field .question-list-field .question a {
+    width: 100%;
+    font-size: 2em;
+}
+
+.field .question-list-field .question span {
+    width: 100%;
+    font-size: 18px;
+}
+
+.field .user-activity .no-polls {
     font-size: 5em;
     margin: 0 auto;
     color: red;

@@ -16,21 +16,25 @@
     <div class="button-nav">
       <a class="home" href='{% url "polls:home" %}'>Home</a>
       {% if user.is_authenticated%}
-      <a href='{% url "users:profile" %}' class="user-profile">{{user.username}}</a>
+      <a href='{% url "users:profile" request.user.username %}' class="user-profile">{{request.user.username}}</a>
       {% else %}
-      <a href='{% url "users:profile" %}' class="user-profile">Profile</a>
+      <a href='{% url "users:login" %}' class="user-profile">Login</a>
       {% endif %}
     </div>
     <hr />
   </nav>
   <main>
     <div class="field">
-      <a href='{% url "polls:home" %}'><button>Back</button></a>
-      <span class="user">User: {{question.question_author}}</span>
+      <a onclick="history.back()" class = "back"><button>Back</button></a>
+      {% if author %}
+        <a href = {{author}} class="user">User: {{question.question_author}}</a>
+      {% else %}
+        <span class = "user" >User: {{question.question_author}}</span>
+      {% endif %}
 
       <div class="question-title">
         <h1>{{question.question_text}}:</h1>
-        {% if user.is_authenticated%}
+        {% if user.is_authenticated and user.username == question.question_author%}
         <form action='{% url "polls:question" question.id%}' method="POST" name="change">
           {% csrf_token %}
           <input type="hidden" name="delete" value="{{question.pk}}" />
@@ -82,7 +86,7 @@
       <span class="error">No Choice</span>
       {% endif %}
       {% endif %}
-      <script src='{% static "polls/js/change_question.js" %}'></script>
+      <script src='{% static "polls/js/question_page_delete_question.js" %}'></script>
     </div>
   </main>
 </body>

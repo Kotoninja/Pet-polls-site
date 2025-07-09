@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="#" />
   <link rel="stylesheet" href='{% static "polls/css/create_question_style.css" %}' />
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
   <link rel="stylesheet" href='{% static "polls/css/constants.css" %}'>
   <title>Create Question</title>
 </head>
@@ -15,12 +15,13 @@
 <body>
   <nav>
     <div class="button-nav">
-      <a class = 'home' href='{% url "polls:home" %}'>Home</a>
-      {% if  user.is_authenticated%}
-      <a href='{% url "users:profile" %}' title="page not available" class="user-profile">{{user.username}}</a>
+      <a class="home" href='{% url "polls:home" %}'>Home</a>
+      {% if user.is_authenticated%}
+      <a href='{% url "users:profile" request.user.username %}' class="user-profile">{{request.user.username}}</a>
       {% else %}
-      <a href='{% url "users:profile" %}' class="user-profile">Profile</a>      
-      {% endif %}    </div>
+      <a href='{% url "users:login" %}' class="user-profile">Login</a>
+      {% endif %}
+    </div>
     <hr />
   </nav>
   <main>
@@ -28,19 +29,26 @@
       <a href='{% url "polls:home" %}'><button>Back</button></a>
       <form action='{% url "polls:create_question" %}' method="post">
         {% csrf_token %}
-        <div>
-          <label for="question">Question:</label>
-          <button type="submit">Create</button>
+        <label class="creator" for="creator">User: {{request.user.username}}</label>
+        <input type="hidden" name="creator" value = {{request.user.username}}>
+        <label for="question">Question:</label>
+
+        <div class = "question">
+          <input type="text" name="question" placeholder="Enter question" required />
+          <span class = "question-length-counter"> 0/50</span>
         </div>
-        <input type="text" name="question" placeholder="Enter question" required />
         <label for="choices">Choices:</label>
         <span class="count-choices">0/10</span>
         <button class="create-choice" type="button">Create Choice</button>
         <div class="choices-list"></div>
+        <button type="submit">Creat</button>
       </form>
     </div>
   </main>
-  <script type="text/javascript" src='{% static "polls/js/create_and_delete.js" %}'></script>
+  {{ json_data|json_script:"county-data"}}
+  <script type="text/javascript" src='{% static "polls/js/create_question_add_remove_choice.js" %}'></script>
+  <script type="text/javascript" src='{% static "polls/js/create_question_switch_user.js" %}'></script>
+  <script type="text/javascript" src='{% static "polls/js/create_question_question_length_counter.js" %}'></script>
 </body>
 
 </html>
