@@ -17,7 +17,7 @@ from users.models import UserInfo
 
 def home(request):
     """
-    TODO Add search field (until the 10th Jul)
+    TODO Add search field (until the 11th Jul)
     TODO Add hashtag (until the 15th Jul)
     """
     context = {"all_quetions": Question.objects.all()}
@@ -25,9 +25,6 @@ def home(request):
 
 
 def question_page(request, question_id):
-    """
-    TODO update back button
-    """
     context = {}
 
     question = get_object_or_404(Question, pk=question_id)

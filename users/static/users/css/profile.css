@@ -118,7 +118,7 @@ main {
     width: 100%;
     margin: 35px 0;
     border-radius: 0;
-    background-color:var(--primary-navigation-underline-color)
+    background-color: var(--primary-navigation-underline-color)
 }
 
 .field .user-activity {
@@ -138,22 +138,22 @@ main {
 .field .question-list-field .question {
     display: flex;
     flex-direction: column;
-    padding:7px;
+    padding: 7px;
     border-radius: 10px;
     border: 2px solid grey;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
-.field .question-list-field .question a{
+.field .question-list-field .question a {
     width: 100%;
     font-size: 2em;
 }
 
-.field .question-list-field .question span{
+.field .question-list-field .question span {
     width: 100%;
     font-size: 18px;
 }
-    
+
 .field .user-activity .no-polls {
     font-size: 5em;
     margin: 0 auto;

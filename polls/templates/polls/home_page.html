@@ -13,7 +13,7 @@
 <body>
   <nav>
     <div class="button-nav">
-      <a class = 'home' href='{% url "polls:home" %}'>Home</a>
+      <a class = "home" href='{% url "polls:home" %}'>Home</a>
       {% if user.is_authenticated%}
       <a href='{% url "users:profile" request.user.username %}' class="user-profile">{{request.user.username}}</a>
       {% else %}

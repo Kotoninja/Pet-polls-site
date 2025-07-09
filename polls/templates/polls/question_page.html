@@ -25,11 +25,11 @@
   </nav>
   <main>
     <div class="field">
-      <a href='{% url "polls:home" %}' class = 'back'><button>Back</button></a>
+      <a onclick="history.back()" class = "back"><button>Back</button></a>
       {% if author %}
         <a href = {{author}} class="user">User: {{question.question_author}}</a>
       {% else %}
-        <span class = 'user' >User: {{question.question_author}}</span>
+        <span class = "user" >User: {{question.question_author}}</span>
       {% endif %}
 
       <div class="question-title">

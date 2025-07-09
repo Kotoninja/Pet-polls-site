@@ -130,7 +130,6 @@ form .question-length-counter {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    /* right:1; */
 }
 
 form .count-choices {

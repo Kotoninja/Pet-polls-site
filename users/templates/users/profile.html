@@ -13,7 +13,7 @@
 <body>
   <nav>
     <div class="button-nav">
-      <a class='home' href='{% url "polls:home" %}'>Home</a>
+      <a class="home" href='{% url "polls:home" %}'>Home</a>
       {% if user.is_authenticated%}
       <a href='{% url "users:profile" request.user.username %}' class="user-profile">{{request.user.username}}</a>
       {% else %}
@@ -23,18 +23,18 @@
     <hr>
   </nav>
   <main>
-    <div class='field'>
-      <div class='user-info'>
-        <div class='photo'>
+    <div class="field">
+      <div class="user-info">
+        <div class="photo">
           <img src="https://i.pinimg.com/736x/1a/a8/d7/1aa8d75f3498784bcd2617b3e3d1e0c4.jpg" alt="user photo">
         </div>
-        <div class='data'>
+        <div class="data">
           <span> Username: {{user.username}} </span>
           <span> Date joined: {{ user.date_joined|date:"d/m/Y" }}</span>
           <span> Count of created polls: {{count_created_of_polls}}</span>
           <span> Count of answered polls: {{count_answered_of_polls}}</span>
           {% if user.pk == request.user.pk%}
-          <form name = 'formLogout' method='post'>
+          <form name = "formLogout" method="post">
             {% csrf_token %}
             <input type="hidden" name="logout" value="True">
             <button class="logout" type = "button">Logout</button>
@@ -42,8 +42,8 @@
           {% endif %}
         </div>
       </div>
-      <hr class='profile-separator'>
-      <div class='user-activity'>
+      <hr class="profile-separator">
+      <div class="user-activity">
         <p>USER POLLS:</p>
         {% if  question_list %}
           <div class = "question-list-field">
@@ -59,7 +59,7 @@
         {% endif %}
       </div>
     </div>
-    <script type='text/javascript' src='{% static "users/js/notification_to_logout.js" %}'></script>
+    <script type="text/javascript" src='{% static "users/js/notification_to_logout.js" %}'></script>
   </main>
 </body>
 
