@@ -15,6 +15,10 @@ from .models import Question
 from users.models import UserInfo
 
 
+def base(request):
+    # TODO delete this view
+    return render(request,"base.html")
+
 def home(request):
     """
     TODO Add search field (until the 11th Jul)
@@ -25,6 +29,7 @@ def home(request):
 
 
 def question_page(request, question_id):
+    #FIXME fix html and css
     context = {}
 
     question = get_object_or_404(Question, pk=question_id)

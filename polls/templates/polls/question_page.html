@@ -1,3 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {% if question %} {{question.question_text}} {% else %} Question{% endif %}{% endblock title %}
+
+{% block content %}
+<a onclick="history.back()" class="back"><button>Back</button></a>
+{% if author %}
+<a href={{author}} class="user">User: {{question.question_author}}</a>
+{% else %}
+<span class="user">User: {{question.question_author}}</span>
+{% endif %}
+
+<div class="question-title">
+  <h1>{{question.question_text}}:</h1>
+  {% if user.is_authenticated and user.username == question.question_author%}
+  <form action='{% url "polls:question" question.id%}' method="POST" name="change">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="{{question.pk}}" />
+    <button type="button" class="delete" name="delete" value="{{question.pk}}">
+      <i class="bx bxs-trash"></i>
+    </button>
+  </form>
+  {% endif %}
+</div>
+
+{% if user.is_authenticated %}
+{% if question.choice_set.all%}
+<form action='{%url "polls:question" question.pk %}' method="post">
+  {% csrf_token %}
+  <span class="votes">Votes: {{question.question_votes}}</span>
+  <div class="choice-list">
+    {% for choice in question.choice_set.all %}
+    {% if choice.choice_text%}
+    <div>
+      <label for="choice{{forloop.counter}}">{{forloop.counter}}. {{choice.choice_text}}</label>
+      <input type="radio" id="choice{{forloop.counter}}" name="choice" value="{{choice.pk}}" />
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  <button class="send" type="submit">Send</button>
+</form>
+{% else %}
+<span class="error">No Choice</span>
+{% endif %}
+{% else %}
+{% if question.choice_set.all%}
+<span class="votes">Votes: {{question.question_votes}}</span>
+<div class="choice-list">
+  {% for choice in question.choice_set.all %}
+  {% if choice.choice_text%}
+  <div>
+    <label class="none-auth" for="choice{{forloop.counter}}">{{forloop.counter}}. {{choice.choice_text}}</label>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<form action='{% url "users:login" %}'>
+  <button class="send" onclick='{% url "users:login" %}'>Send</button>
+</form>
+
+{% else %}
+<span class="error">No Choice</span>
+{% endif %}
+{% endif %}
+<script src='{% static "polls/js/question_page_delete_question.js" %}'></script>
+{% endblock content %}
+
+
+{% comment %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,11 +97,11 @@
   </nav>
   <main>
     <div class="field">
-      <a onclick="history.back()" class = "back"><button>Back</button></a>
+      <a onclick="history.back()" class="back"><button>Back</button></a>
       {% if author %}
-        <a href = {{author}} class="user">User: {{question.question_author}}</a>
+      <a href={{author}} class="user">User: {{question.question_author}}</a>
       {% else %}
-        <span class = "user" >User: {{question.question_author}}</span>
+      <span class="user">User: {{question.question_author}}</span>
       {% endif %}
 
       <div class="question-title">
@@ -91,4 +163,4 @@
   </main>
 </body>
 
-</html>
+</html> {% endcomment %}
