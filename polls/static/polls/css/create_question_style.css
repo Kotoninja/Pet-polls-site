@@ -23,12 +23,20 @@
     flex-direction: column;
 }
 
-form .creator {
-    cursor: pointer;
-    margin: 10px 0 0 5px;
-    font-size: 24px;
-    color: var(--optional-information-color);
+form .author {
+    margin-top: 20px;
     user-select: none;
+}
+
+form .author i {
+    cursor: pointer;
+    font-size: 25px
+}
+
+form .creator {
+    user-select: none;
+    font-size: 28px;
+    color: var(--optional-information-color);
 }
 
 form label {
@@ -61,7 +69,7 @@ form .question input {
 form .question-length-counter {
     position: absolute;
     font-size: 24px;
-    color:green;
+    color: green;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);

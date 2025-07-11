@@ -1,4 +1,5 @@
 const jsonData = JSON.parse(document.getElementById("county-data").textContent);
+var switchButton = document.querySelector('.bi-arrow-repeat')
 
 // Question creator
 var creatorName = jsonData.creator;
@@ -16,4 +17,4 @@ function changecreator() {
     };
 };
 
-creatorFild.addEventListener("click", changecreator);
+switchButton.addEventListener("click", changecreator);
