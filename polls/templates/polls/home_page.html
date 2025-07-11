@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-  {% load static %}
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href='{% static "polls/css/home_style.css" %}' />
-  <link rel="stylesheet" href='{% static "polls/css/constants.css" %}'>
-  <title>Home</title>
-</head>
+{% block title %}Home{% endblock title %}
 
-<body>
-  <nav>
-    <div class="button-nav">
-      <a class = "home" href='{% url "polls:home" %}'>Home</a>
-      {% if user.is_authenticated%}
-      <a href='{% url "users:profile" request.user.username %}' class="user-profile">{{request.user.username}}</a>
-      {% else %}
-      <a href='{% url "users:login" %}' class="user-profile">Login</a>
-      {% endif %}
-    </div>
-    <hr />
-  </nav>
-  <main>
-    <div class="polls">
-      {% if user.is_authenticated %}
-      <a class="create-question" href='{% url "polls:create_question" %}'><button>Create question</button></a>
-      {% endif %}
-      <h1>Questions:</h1>
-      {% for question in all_quetions %}
-      <a class="question-title" href='{% url "polls:question" question.pk  %}'>
-        {{question.question_text}}
-      </a>
-      {% endfor %}
-    </div>
-  </main>
-</body>
+{% block css %}
+<link rel="stylesheet" href='{% static "polls/css/home_style.css" %}' />
+{% endblock css %}
 
-</html>
+{% block content %}
+{% if user.is_authenticated %}
+<a class="create-question" href='{% url "polls:create_question" %}'><button>Create question</button></a>
+{% endif %}
+<h1>Questions:</h1>
+{% for question in all_quetions %}
+<a class="question-title" href='{% url "polls:question" question.pk  %}'>
+  {{question.question_text}}
+</a>
+{% endfor %}
+{% endblock %}
