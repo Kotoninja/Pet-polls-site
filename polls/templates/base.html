@@ -6,9 +6,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href='{% static "polls/css/base.css" %}' />
-    <link rel="stylesheet" href='{% static "polls/css/home_style.css" %}' />
-    <link rel="stylesheet" href='{% static "polls/css/question_style.css" %}' />
     <link rel="stylesheet" href='{% static "polls/css/constants.css" %}' />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    {% block css %}
+    {% endblock css %}
     <title>{% block title %} Base Html {% endblock title %}</title>
 </head>
 

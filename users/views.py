@@ -22,7 +22,7 @@ def user_login(request):
             login(request, user)
             return redirect("polls:home")
         else:
-            context["err or"] = "Invalid username or password entered"
+            context["error"] = "Invalid username or password entered"
 
     return render(request, "users/login.html", context=context)
 
