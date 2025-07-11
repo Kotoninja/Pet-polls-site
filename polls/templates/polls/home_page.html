@@ -8,10 +8,19 @@
 {% endblock css %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<a class="create-question" href='{% url "polls:create_question" %}'><button>Create question</button></a>
-{% endif %}
-<h1>Questions:</h1>
+<form action="" method = "post">
+  {% csrf_token %}
+  <div class="search">
+    <input type="text" placeholder="Search...">
+    <button title="Search"><i class="bi bi-search"></i></button>
+  </div>
+</form>
+<div class="header">
+  <h1>Questions:</h1>
+  {% if user.is_authenticated %}
+  <a href='{% url "polls:create_question" %}' title="Creater Question"><i onclick="" class="bi bi-plus-circle-fill"></i></a>
+  {% endif %}
+</div>
 {% for question in all_quetions %}
 <a class="question-title" href='{% url "polls:question" question.pk  %}'>
   {{question.question_text}}

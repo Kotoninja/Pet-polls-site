@@ -12,11 +12,14 @@
     /* nav underline */
     --primary-navigation-underline-color: rgb(0, 128, 0);
     /* create question button */
-    --primary-create-question-button-color: rgb(212, 211, 206);
-    --border-create-question-button-color: rgb(134, 134, 134);
-    --primary-create-question-button-hover-color: rgb(204, 204, 252);
-    --second-primary-create-question-button-hover-color: rgb(187, 187, 252);
-    --border-create-question-button-hover-color: rgb(94, 94, 243);
+    --primary-search-color: rgb(223, 223, 223);
+    --border-search-color: rgb(134, 134, 134);
+    --primary-search-button-color: rgb(204, 204, 252);
+    --primary-search-button-hover-color: rgb(187, 187, 252);
+    --border-search-button-hover-color: rgb(0, 0, 205);
     /* optional information */
     --optional-information-color: rgb(102, 102, 102);
+    /* green colors */
+    --primary-green-color: rgb(34, 139, 34);
+    --primary-green-hover-color: rgb(0, 100, 0);
 }
