@@ -8,28 +8,40 @@ from django.contrib.auth.models import User
 
 # other
 import json
-
+from haystack.query import SearchQuerySet
 
 # apps models
 from .models import Question
 from users.models import UserInfo
 
 
-def base(request):
-    # TODO delete this view
-    return render(request,"base.html")
-
 def home(request):
     """
-    TODO Add search field (until the 11th Jul)
     TODO Add hashtag (until the 15th Jul)
+    FIXME fix solr and haystack, refactor code, read https://github.com/django-haystack/django-haystack/issues/1895,
+    add new question to solr, and etc.
     """
-    context = {"all_quetions": Question.objects.all()}
+    context = {"all_questions": Question.objects.all(),
+               "search_error": None,
+               "search_value": ""}
+    if request.method == "GET":
+        if request.GET.get("search"):
+            results = SearchQuerySet().models(Question).filter(content = request.GET['search']).load_all()
+            context['all_questions'] = None
+            context['results'] = results
+            
+            
+            # search_questions = Question.objects.filter(question_text__icontains=request.GET.get("search"))
+            # context["search_value"] = request.GET.get("search")
+            # if search_questions:
+            #     context["all_questions"] = search_questions
+            # else:
+            #     context["all_questions"] = Question.objects.none()
+            #     context["search_error"] = 'search_error'
     return render(request, "polls/home_page.html", context=context)
 
 
 def question_page(request, question_id):
-    #FIXME fix html and css
     context = {}
 
     question = get_object_or_404(Question, pk=question_id)
@@ -56,7 +68,7 @@ def question_page(request, question_id):
             return HttpResponseRedirect(reverse("polls:home"))
 
         elif request.POST.get("choice"):
-            # Add 
+            # Add
             udpate_the_user_ans_filed = UserInfo.objects.get(user=request.user)
             udpate_the_user_ans_filed.count_answered_of_polls = (
                 F("count_answered_of_polls") + 1

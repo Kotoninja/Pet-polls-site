@@ -8,10 +8,10 @@
 {% endblock css %}
 
 {% block content %}
-<form action="" method = "post">
+<form action='{% url "polls:home" %}' method = "get">
   {% csrf_token %}
   <div class="search">
-    <input type="text" placeholder="Search...">
+    <input type="text" name="search" placeholder="Search...", value = {{search_value}}>
     <button title="Search"><i class="bi bi-search"></i></button>
   </div>
 </form>
@@ -21,9 +21,17 @@
   <a href='{% url "polls:create_question" %}' title="Creater Question"><i onclick="" class="bi bi-plus-circle-fill"></i></a>
   {% endif %}
 </div>
-{% for question in all_quetions %}
-<a class="question-title" href='{% url "polls:question" question.pk  %}'>
-  {{question.question_text}}
-</a>
+{% for question in all_questions %}
+  <a class="question-title" href='{% url "polls:question" question.pk  %}'>{{question.question_text}}</a>
 {% endfor %}
+
+{% for result in results %}
+  {% with question=result.object %}
+    <a class="question-title" href='{% url "polls:question" question.pk  %}'>{{question.question_text}}</a> 
+  {% endwith %}
+{% endfor %}
+
+{% if search_error %}
+<h2>Oops... Nothing found</h2>
+{% endif %}
 {% endblock %}
