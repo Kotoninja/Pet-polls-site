@@ -7,29 +7,59 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # other
-import json
-
+from haystack.query import SearchQuerySet
+import pysolr
 
 # apps models
 from .models import Question
 from users.models import UserInfo
 
 
-def base(request):
-    # TODO delete this view
-    return render(request,"base.html")
+def solr_status_code(
+    core: str, url: str = "http://127.0.0.1:8983/solr", timeout: int = 10
+):
+    try:
+        solr = pysolr.Solr(url=f"{url}/{core}", timeout=timeout)
+        ping = solr.ping()
+        return 1
+    except pysolr.SolrError:
+        return 0
+
 
 def home(request):
     """
-    TODO Add search field (until the 11th Jul)
     TODO Add hashtag (until the 15th Jul)
     """
-    context = {"all_quetions": Question.objects.all()}
+    context: dict = {
+        "all_questions": Question.objects.all(),
+    }
+
+    if request.method == "GET":
+        if request.GET.get("search"):
+            response: str = request.GET.get("search")
+            context["search_value"] = response
+
+            if solr_status_code(
+                core="polls"
+            ):  # If solr server is work - use solr search, else use deafult search
+                print("solr search")
+                results = (
+                    SearchQuerySet()
+                    .models(Question)
+                    .filter(content=response)
+                    .load_all()
+                )
+
+                context["all_questions"] = [result.object for result in results]
+            else:
+                print("default search")
+                context["all_questions"] = Question.objects.filter(
+                    question_text__icontains=response
+                )
     return render(request, "polls/home_page.html", context=context)
 
 
 def question_page(request, question_id):
-    #FIXME fix html and css
     context = {}
 
     question = get_object_or_404(Question, pk=question_id)
@@ -56,7 +86,7 @@ def question_page(request, question_id):
             return HttpResponseRedirect(reverse("polls:home"))
 
         elif request.POST.get("choice"):
-            # Add 
+            # Add
             udpate_the_user_ans_filed = UserInfo.objects.get(user=request.user)
             udpate_the_user_ans_filed.count_answered_of_polls = (
                 F("count_answered_of_polls") + 1
@@ -94,7 +124,7 @@ def create_question(request):
         question = request.POST.get("question")
         choices = request.POST.getlist("choices")
 
-        new_question = Question.objects.create(
+        new_question: Question = Question.objects.create(
             question_author=creator, question_text=question
         )
 
@@ -113,6 +143,6 @@ def create_question(request):
             )
             udpate_the_user_created_filed.save()
 
-        return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))
+        return HttpResponseRedirect(reverse("polls:question", args=(new_question.pk,)))
 
     return render(request, "polls/create_question.html", context=context)

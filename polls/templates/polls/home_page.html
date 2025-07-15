@@ -8,13 +8,28 @@
 {% endblock css %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<a class="create-question" href='{% url "polls:create_question" %}'><button>Create question</button></a>
+<form class="searchForm" action='{% url "polls:home" %}' method = "get">
+  <div class="search">
+    <input type="text" name="search" placeholder="Search...", value = {{search_value}}>
+    <button type="button" class="submitForm" title="Search"><i class="bi bi-search"></i></button>
+  </div>
+</form>
+<div class="header">
+  <h1>Questions:</h1>
+  {% if user.is_authenticated %}
+  <a href='{% url "polls:create_question" %}' title="Creater Question"><i onclick="" class="bi bi-plus-circle-fill"></i></a>
+  {% endif %}
+</div>
+
+{% if all_questions %}
+  {% for question in all_questions %}
+    <a class="question-title" href='{% url "polls:question" question.pk  %}'>{{question.question_text}}</a>
+  {% endfor %}
+{% else %}
+  <div class="search-error">
+    <i class="bi bi-emoji-tear-fill"></i>
+    <h2>Oops... Nothing found</h2>
+  </div>
 {% endif %}
-<h1>Questions:</h1>
-{% for question in all_quetions %}
-<a class="question-title" href='{% url "polls:question" question.pk  %}'>
-  {{question.question_text}}
-</a>
-{% endfor %}
+<script type="text/javascript" src='{% static "polls/js/home_search_valid_form.js" %}'></script>
 {% endblock %}

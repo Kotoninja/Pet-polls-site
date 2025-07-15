@@ -12,10 +12,13 @@
 <a href='{% url "polls:home" %}'><button>Back</button></a>
 <form action='{% url "polls:create_question" %}' method="post">
   {% csrf_token %}
-  <label class="creator" for="creator">User: {{request.user.username}}</label>
-  <input type="hidden" name="creator" value={{request.user.username}}>
+  <div class="author">
+    <i class="bi bi-arrow-repeat"></i>
+    <label class="creator" for="creator">User: {{request.user.username}}</label>
+    <input type="hidden" name="creator" value={{request.user.username}}>
+  </div>
+  
   <label for="question">Question:</label>
-
   <div class="question">
     <input type="text" name="question" placeholder="Enter question" required />
     <span class="question-length-counter"> 0/50</span>
