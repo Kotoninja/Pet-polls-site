@@ -15,30 +15,47 @@ from .models import Question
 from users.models import UserInfo
 
 
+def solr_status_code(
+    core: str, url: str = "http://127.0.0.1:8983/solr", timeout: int = 10
+):
+    try:
+        solr = pysolr.Solr(url=f"{url}/{core}", timeout=timeout)
+        ping = solr.ping()
+        return 1
+    except pysolr.SolrError:
+        return 0
+
+
 def home(request):
     """
     TODO Add hashtag (until the 15th Jul)
-    FIXME Update search system, but url when user send a requests so big
-    FIXME do right link
     """
-    context = {
+    context: dict = {
         "all_questions": Question.objects.all(),
-        "search_value": "",
     }
+
     if request.method == "GET":
         if request.GET.get("search"):
-            responese = request.GET.get("search")
-            context["search_value"] = responese
+            response: str = request.GET.get("search")
+            context["search_value"] = response
 
-            results = (
-                SearchQuerySet()
-                .models(Question)
-                .filter(content=request.GET["search"])
-                .load_all()
-            )
+            if solr_status_code(
+                core="polls"
+            ):  # If solr server is work - use solr search, else use deafult search
+                print("solr search")
+                results = (
+                    SearchQuerySet()
+                    .models(Question)
+                    .filter(content=response)
+                    .load_all()
+                )
 
-            context["all_questions"] = [result.object for result in results]
-
+                context["all_questions"] = [result.object for result in results]
+            else:
+                print("default search")
+                context["all_questions"] = Question.objects.filter(
+                    question_text__icontains=response
+                )
     return render(request, "polls/home_page.html", context=context)
 
 
@@ -126,6 +143,6 @@ def create_question(request):
             )
             udpate_the_user_created_filed.save()
 
-        return HttpResponseRedirect(reverse("polls:question", args=(new_question.id,)))
+        return HttpResponseRedirect(reverse("polls:question", args=(new_question.pk,)))
 
     return render(request, "polls/create_question.html", context=context)

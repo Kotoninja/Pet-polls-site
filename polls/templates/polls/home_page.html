@@ -8,11 +8,10 @@
 {% endblock css %}
 
 {% block content %}
-<form action='{% url "polls:home" %}' method = "get">
-  {% csrf_token %}
+<form class="searchForm" action='{% url "polls:home" %}' method = "get">
   <div class="search">
     <input type="text" name="search" placeholder="Search...", value = {{search_value}}>
-    <button title="Search"><i class="bi bi-search"></i></button>
+    <button type="button" class="submitForm" title="Search"><i class="bi bi-search"></i></button>
   </div>
 </form>
 <div class="header">
@@ -32,4 +31,5 @@
     <h2>Oops... Nothing found</h2>
   </div>
 {% endif %}
+<script type="text/javascript" src='{% static "polls/js/home_search_valid_form.js" %}'></script>
 {% endblock %}
