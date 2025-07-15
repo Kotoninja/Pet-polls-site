@@ -60,6 +60,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 ROOT_URLCONF = 'auth_system.urls'
 
 TEMPLATES = [

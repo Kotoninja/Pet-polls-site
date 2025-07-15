@@ -77,3 +77,19 @@
     margin-right: 10px;
     display: inline-block;
 }
+
+.field .search-error {
+    display: flex;
+    margin: auto auto;
+    color: grey;
+}
+
+.field .search-error i {
+    font-size: 3em;
+    margin-right: 10px;
+}
+
+.field .search-error h2 {
+    font-size: 2em;
+    margin: auto 0;
+}

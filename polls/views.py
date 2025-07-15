@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # other
-import json
 from haystack.query import SearchQuerySet
+import pysolr
 
 # apps models
 from .models import Question
@@ -18,26 +18,27 @@ from users.models import UserInfo
 def home(request):
     """
     TODO Add hashtag (until the 15th Jul)
-    FIXME fix solr and haystack, refactor code, read https://github.com/django-haystack/django-haystack/issues/1895,
-    add new question to solr, and etc.
+    FIXME Update search system, but url when user send a requests so big
+    FIXME do right link
     """
-    context = {"all_questions": Question.objects.all(),
-               "search_error": None,
-               "search_value": ""}
+    context = {
+        "all_questions": Question.objects.all(),
+        "search_value": "",
+    }
     if request.method == "GET":
         if request.GET.get("search"):
-            results = SearchQuerySet().models(Question).filter(content = request.GET['search']).load_all()
-            context['all_questions'] = None
-            context['results'] = results
-            
-            
-            # search_questions = Question.objects.filter(question_text__icontains=request.GET.get("search"))
-            # context["search_value"] = request.GET.get("search")
-            # if search_questions:
-            #     context["all_questions"] = search_questions
-            # else:
-            #     context["all_questions"] = Question.objects.none()
-            #     context["search_error"] = 'search_error'
+            responese = request.GET.get("search")
+            context["search_value"] = responese
+
+            results = (
+                SearchQuerySet()
+                .models(Question)
+                .filter(content=request.GET["search"])
+                .load_all()
+            )
+
+            context["all_questions"] = [result.object for result in results]
+
     return render(request, "polls/home_page.html", context=context)
 
 
@@ -106,7 +107,7 @@ def create_question(request):
         question = request.POST.get("question")
         choices = request.POST.getlist("choices")
 
-        new_question = Question.objects.create(
+        new_question: Question = Question.objects.create(
             question_author=creator, question_text=question
         )
 
