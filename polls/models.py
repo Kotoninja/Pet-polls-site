@@ -5,7 +5,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=50)
     question_votes = models.IntegerField(default=0)
     question_author = models.CharField(max_length=20, default="Anonymous")
-    tags = models.ManyToManyField("Tag", blank=True)
+    tags = models.ManyToManyField("Tag", blank=True, related_name="tags")
 
     def __str__(self):
         return f"user - {self.question_author}; question - {self.question_text}; count of votes - {self.question_votes}"

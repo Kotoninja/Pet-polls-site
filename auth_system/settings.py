@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
