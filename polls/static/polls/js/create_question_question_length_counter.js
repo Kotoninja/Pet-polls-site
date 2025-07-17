@@ -2,7 +2,7 @@ var questionLengtText = document.querySelector(".question-length-counter");
 var questionInput = document.querySelector("input[name='question']");
 
 
-function changeColor(length) {
+function changeColorQuestion(length) {
     if (length < 25) {
         return "green";
     } else if (length >= 25 && length <= 40) {
@@ -14,7 +14,7 @@ function changeColor(length) {
 
 function checkLength() {
     questionLengtText.textContent = questionInput.value.length + '/50';
-    questionLengtText.style.color = changeColor(questionInput.value.length);
+    questionLengtText.style.color = changeColorQuestion(questionInput.value.length);
 };
 
 

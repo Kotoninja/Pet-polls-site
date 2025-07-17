@@ -113,6 +113,9 @@ def question_page(request, question_id):
 
 @login_required
 def create_question(request):
+    """
+    TODO finish tags 
+    """
     context = {}
     json_data = {"creator": request.user.username}
     context["json_data"] = json_data

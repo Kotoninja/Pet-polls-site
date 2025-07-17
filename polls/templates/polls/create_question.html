@@ -18,16 +18,21 @@
     <input type="hidden" name="creator" value={{request.user.username}}>
   </div>
   
-  <label for="question">Question:</label>
   <div class="question">
-    <input type="text" name="question" placeholder="Enter question" required />
-    <span class="question-length-counter"> 0/50</span>
+    <label for="question">Question:</label>
+    <div class="question-input">
+      <input type="text" name="question" placeholder="Enter question" required />
+      <span class="question-length-counter"> 0/50</span>
+    </div>
   </div>
-  <label for="choices">Choices:</label>
-  <span class="count-choices">0/10</span>
-  <button class="create-choice" type="button">Create Choice</button>
-  <div class="choices-list"></div>
+  
+  <div class="choices">
+    <label for="choices">Choices: <span class="count-choices">0/10</span></label>
+    <button class="create-choice" type="button">Create Choice</button>
+    <div class="choices-list"></div>
+  </div>
   <button type="submit">Creat</button>
+
 </form>
 
 {{ json_data|json_script:"county-data"}}
