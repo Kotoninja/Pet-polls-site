@@ -11,7 +11,7 @@ from haystack.query import SearchQuerySet
 import pysolr
 
 # apps models
-from .models import Question
+from .models import Question, Tag
 from users.models import UserInfo
 
 
@@ -27,9 +27,6 @@ def solr_status_code(
 
 
 def home(request):
-    """
-    TODO Add hashtag (until the 15th Jul)
-    """
     context: dict = {
         "all_questions": Question.objects.all(),
     }
@@ -65,6 +62,7 @@ def question_page(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     context["question"] = question
+    context["tags"] = question.tags.all()
     if question.question_author != "Anonymous":
         author = reverse(
             "users:profile", kwargs={"profile_nickname": question.question_author}

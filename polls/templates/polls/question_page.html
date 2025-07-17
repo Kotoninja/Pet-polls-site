@@ -28,6 +28,15 @@
   {% endif %}
 </div>
 
+{% if tags %} 
+<p class="tags-title">Tags:</p>
+<div class = 'tags'>
+    {% for tag in tags%}
+      <a href="#">#{{tag}}</a>
+    {% endfor %} 
+  </div>
+{% endif %}
+
 {% if user.is_authenticated %}
 {% if question.choice_set.all%}
 <form action='{%url "polls:question" question.pk %}' method="post">
