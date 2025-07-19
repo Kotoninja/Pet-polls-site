@@ -18,15 +18,24 @@
     <input type="hidden" name="creator" value={{request.user.username}}>
   </div>
   
-  <div class="question">
+  <div class="block question">
     <label for="question">Question:</label>
     <div class="question-input">
       <input type="text" name="question" placeholder="Enter question" required />
       <span class="question-length-counter"> 0/50</span>
     </div>
   </div>
+
+  <div class="block tags">
+    <label for="tags">Tags:</label>
+    <div class = "tags-list"></div>
+    <div class = "add-tag-field">
+      <input placeholder="#" class= "input-tag" type="text">
+      <button class="add-tag" type="button"><i class="bi bi-plus-square-fill"></i></button>
+    </div>
+  </div>
   
-  <div class="choices">
+  <div class="block choices">
     <label for="choices">Choices: <span class="count-choices">0/10</span></label>
     <button class="create-choice" type="button">Create Choice</button>
     <div class="choices-list"></div>
@@ -39,4 +48,5 @@
 <script type="text/javascript" src='{% static "polls/js/create_question_add_remove_choice.js" %}'></script>
 <script type="text/javascript" src='{% static "polls/js/create_question_switch_user.js" %}'></script>
 <script type="text/javascript" src='{% static "polls/js/create_question_question_length_counter.js" %}'></script>
+<script type="text/javascript" src='{% static "polls/js/create_question_tags.js" %}'></script>
 {% endblock content %}
