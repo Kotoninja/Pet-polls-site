@@ -11,7 +11,7 @@ from haystack.query import SearchQuerySet
 import pysolr
 
 # apps models
-from .models import Question
+from .models import Question, Tag
 from users.models import UserInfo
 
 
@@ -27,9 +27,6 @@ def solr_status_code(
 
 
 def home(request):
-    """
-    TODO Add hashtag (until the 15th Jul)
-    """
     context: dict = {
         "all_questions": Question.objects.all(),
     }
@@ -56,6 +53,9 @@ def home(request):
                 context["all_questions"] = Question.objects.filter(
                     question_text__icontains=response
                 )
+
+            if not context["all_questions"]:
+                context["search_error"] = 1
     return render(request, "polls/home_page.html", context=context)
 
 
@@ -65,6 +65,7 @@ def question_page(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     context["question"] = question
+    context["tags"] = question.tags.all()
     if question.question_author != "Anonymous":
         author = reverse(
             "users:profile", kwargs={"profile_nickname": question.question_author}
@@ -77,8 +78,9 @@ def question_page(request, question_id):
             created_polls = UserInfo.objects.get(
                 user=User.objects.get(username=question.question_author)
             )
-            created_polls.count_created_of_polls = F("count_created_of_polls") - 1
-            created_polls.save()
+            if created_polls.count_created_of_polls > 0:
+                created_polls.count_created_of_polls = F("count_created_of_polls") - 1
+                created_polls.save()
 
             # Delete question
             Question.objects.get(pk=question_id).delete()
@@ -122,11 +124,20 @@ def create_question(request):
     if request.method == "POST":
         creator = request.POST.get("creator")
         question = request.POST.get("question")
+        tags = request.POST.getlist("tags")
         choices = request.POST.getlist("choices")
 
         new_question: Question = Question.objects.create(
             question_author=creator, question_text=question
         )
+
+        for tag in tags:
+            if Tag.objects.filter(tag_text=tag).exists():
+                tag = Tag.objects.get(tag_text=tag)
+            else:
+                tag = Tag.objects.create(tag_text=tag)
+                tag.save()
+            new_question.tags.add(tag)
 
         for choice in choices:
             if choice:
@@ -146,3 +157,9 @@ def create_question(request):
         return HttpResponseRedirect(reverse("polls:question", args=(new_question.pk,)))
 
     return render(request, "polls/create_question.html", context=context)
+
+
+def tag_search(request, tag):
+    tag = get_object_or_404(Tag, tag_text=tag)
+    context = {"tag": tag, "tag_questions": tag.tags.all()}
+    return render(request, "polls/tag_search.html", context=context)

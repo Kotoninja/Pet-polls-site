@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if tag %}Search: #{{tag.tag_text}}{% else %}Search: Tag{% endif %}{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href='{% static "polls/css/tag_search.css" %}'>
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="title">Questions contain: "#{{tag}}"</h1>
+<p class="results">Found {{tag_questions|length}} results</p>
+{% for question in tag_questions %}
+    <a class="question-title" href='{% url "polls:question" question.pk  %}'>{{question.question_text}}</a>
+{% endfor %}
+{% endblock content %}

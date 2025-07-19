@@ -6,7 +6,7 @@ const listChoices = document.querySelector(".choices-list");
 const blankValuse = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 
-function changeColor() {
+function changeColorChoice() {
     if (countChoices < 6) {
         return "green";
     } else if (countChoices >= 6 && countChoices <= 8) {
@@ -48,14 +48,14 @@ function newInputChoice() {
         newChoiceDeleteButton.append(choiceDeleteButtonIcon);
 
         textCountChoices.textContent = countChoices + "/10";
-        textCountChoices.style.color = changeColor();
+        textCountChoices.style.color = changeColorChoice();
 
         newChoiceDeleteButton.addEventListener("click", function () {
             if (countChoices > 2) {
                 document.getElementById("choice-set" + newChoiceDeleteButton.value).remove();
                 countChoices--;
                 textCountChoices.textContent = countChoices + "/10";
-                textCountChoices.style.color = changeColor();
+                textCountChoices.style.color = changeColorChoice();
                 blankValuse.push(+newChoiceDeleteButton.value);
             } else {
                 alert("Count number of choices at least two");

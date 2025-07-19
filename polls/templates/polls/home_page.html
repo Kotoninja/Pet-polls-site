@@ -26,10 +26,14 @@
     <a class="question-title" href='{% url "polls:question" question.pk  %}'>{{question.question_text}}</a>
   {% endfor %}
 {% else %}
-  <div class="search-error">
-    <i class="bi bi-emoji-tear-fill"></i>
-    <h2>Oops... Nothing found</h2>
-  </div>
+  {% if search_error %}
+    <div class="search-error">
+      <i class="bi bi-emoji-tear-fill"></i>
+      <h2>Oops... Nothing found</h2>
+    </div>
+  {% else %}
+    <h2 class="search-error">No Polls</h2>
+  {% endif %}
 {% endif %}
 <script type="text/javascript" src='{% static "polls/js/home_search_valid_form.js" %}'></script>
 {% endblock %}

@@ -46,6 +46,8 @@ def user_register(request):
                 password=request.POST["password"],
             )
 
+            UserInfo.objects.create(user=user)
+
             return redirect("users:login")
     return render(request, "users/register.html", context=context)
 

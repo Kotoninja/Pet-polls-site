@@ -4,6 +4,13 @@
     min-width: 50px;
 }
 
+.field .block {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 2px solid rgba(128, 128, 128, 0.7);
+}
+
 .field a button {
     width: 100%;
     height: 100%;
@@ -40,33 +47,33 @@ form .creator {
 }
 
 form label {
-    font-size: 4em;
+    font-size: 2em;
 }
 
 form input {
     height: 32px;
-    margin: 8px;
     border: 2px solid black;
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
 }
 
-form .question {
+/* form .question {} */
+
+form .question .question-input {
     position: relative;
     background-color: inherit;
     bottom: 1;
 }
 
-form .question input {
+form .question .question-input input {
     position: relative;
-    margin: 0;
     width: 100%;
-    height: 100%;
     padding-right: 10%;
+
 }
 
-form .question-length-counter {
+form .question .question-input .question-length-counter {
     position: absolute;
     font-size: 24px;
     color: green;
@@ -75,16 +82,89 @@ form .question-length-counter {
     transform: translateY(-50%);
 }
 
-form .count-choices {
+form .tags {
+    border: 2px solid rgba(128, 128, 128, 0.7);
+}
+
+form .tags-list:empty {
+    border: none;
+}
+
+form .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid rgba(128, 128, 128, 0.7);
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+form .tags-list .added-tag {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: gainsboro;
+    margin: 10px 5px;
+    padding: 0 10px;
+    font-size: 30px;
+}
+
+form .tags-list .added-tag button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    margin-left: 5px;
+}
+
+form .tags-list .added-tag button i:before {
+    font-size: 20px;
+    margin: auto auto;
+    color: red
+}
+
+
+form .tags .add-tag-field {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+form .tags .add-tag-field .input-tag {
+    width: 30%;
+}
+
+form .tags .add-tag-field .add-tag {
+    cursor: pointer;
+    position: absolute;
+    right: calc(35% + 5px);
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: inherit;
+}
+
+form .tags .add-tag-field .add-tag i:before {
+    font-size: 24px;
+    color: green;
+    margin: auto auto;
+}
+
+form .choices {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+form .choices .count-choices {
     margin: 0 auto;
     font-size: 32px;
     color: green;
     text-shadow: 0 0 15px rgb(107, 107, 107);
 }
 
-form .create-choice {
+form .choices .create-choice {
     cursor: pointer;
-    margin: 5px 0;
     height: 40px;
     font-size: 25px;
     border: 3px solid;
@@ -103,6 +183,7 @@ form div.choices-list {
     border: 2px solid black;
     padding: 5px;
     border-radius: 15px;
+    margin-top: 15px;
 }
 
 form div.choices-list div {
@@ -111,6 +192,7 @@ form div.choices-list div {
 
 form div.choices-list div input {
     width: 100%;
+    margin: 8px;
 }
 
 form div.choices-list div button {
