@@ -53,6 +53,9 @@ def home(request):
                 context["all_questions"] = Question.objects.filter(
                     question_text__icontains=response
                 )
+
+            if not context["all_questions"]:
+                context["search_error"] = 1
     return render(request, "polls/home_page.html", context=context)
 
 
@@ -75,8 +78,9 @@ def question_page(request, question_id):
             created_polls = UserInfo.objects.get(
                 user=User.objects.get(username=question.question_author)
             )
-            created_polls.count_created_of_polls = F("count_created_of_polls") - 1
-            created_polls.save()
+            if created_polls.count_created_of_polls > 0:
+                created_polls.count_created_of_polls = F("count_created_of_polls") - 1
+                created_polls.save()
 
             # Delete question
             Question.objects.get(pk=question_id).delete()
@@ -113,9 +117,6 @@ def question_page(request, question_id):
 
 @login_required
 def create_question(request):
-    """
-    TODO finish tags 
-    """
     context = {}
     json_data = {"creator": request.user.username}
     context["json_data"] = json_data
@@ -123,11 +124,20 @@ def create_question(request):
     if request.method == "POST":
         creator = request.POST.get("creator")
         question = request.POST.get("question")
+        tags = request.POST.getlist("tags")
         choices = request.POST.getlist("choices")
 
         new_question: Question = Question.objects.create(
             question_author=creator, question_text=question
         )
+
+        for tag in tags:
+            if Tag.objects.filter(tag_text=tag).exists():
+                tag = Tag.objects.get(tag_text=tag)
+            else:
+                tag = Tag.objects.create(tag_text=tag)
+                tag.save()
+            new_question.tags.add(tag)
 
         for choice in choices:
             if choice:

@@ -2,35 +2,43 @@ var tagsField = document.querySelector('.tags-list');
 var tagInput = document.querySelector(".input-tag");
 var tagAdd = document.querySelector(".add-tag");
 
-function addTagToField (){
+function addTagToField() {
     if (tagInput.value) {
         // Create new div
-        var newDiv = document.createElement("div");
-        newDiv.className = "added-tag"
+        const newDiv = document.createElement("div");
+        newDiv.className = "added-tag";
+
+        // Create hidden input
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "tags";
+        hiddenInput.value = tagInput.value;
+
 
         // New Tag title
-        var tagNew = document.createElement("p");
+        const tagNew = document.createElement("p");
         tagNew.textContent = "#" + tagInput.value;
         tagInput.value = '';
-    
+
         // Add button
-        var removeButton = document.createElement("button");
+        const removeButton = document.createElement("button");
         removeButton.type = "button";
 
         // Remove Tag icon
-        var tagIcon = document.createElement("i");
+        const tagIcon = document.createElement("i");
         tagIcon.className = "bi bi-x-square-fill";
 
-        removeButton.appendChild(tagIcon)
+        removeButton.appendChild(tagIcon);
 
+        newDiv.appendChild(hiddenInput);
         newDiv.appendChild(tagNew);
         newDiv.appendChild(removeButton);
-        
+
         tagsField.appendChild(newDiv);
 
         function removeTag() {
-            newDiv.remove()
-        }
+            newDiv.remove();
+        };
         removeButton.addEventListener("click", removeTag);
     };
 };
@@ -39,8 +47,7 @@ function addTagToField (){
 tagAdd.addEventListener("click", addTagToField);
 tagInput.addEventListener("keydown", function (action) {
     if (action.key == "Enter") {
-        console.log(action.key)
         action.preventDefault();
         addTagToField();
-    }
-})
+    };
+});

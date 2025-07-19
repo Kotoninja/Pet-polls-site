@@ -72,6 +72,7 @@
 .field .votes {
     display: block;
     color: var(--optional-information-color);
+    margin-top: 10px ;
 }
 
 .field .choice-list {
