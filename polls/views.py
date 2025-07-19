@@ -157,3 +157,9 @@ def create_question(request):
         return HttpResponseRedirect(reverse("polls:question", args=(new_question.pk,)))
 
     return render(request, "polls/create_question.html", context=context)
+
+
+def tag_search(request, tag):
+    tag = get_object_or_404(Tag, tag_text=tag)
+    context = {"tag": tag, "tag_questions": tag.tags.all()}
+    return render(request, "polls/tag_search.html", context=context)

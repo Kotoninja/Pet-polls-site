@@ -1,0 +1,16 @@
+.results {
+    font-size: 24px;
+    margin: 10px 0;
+}
+.field a {
+    font-size: 2em;
+}
+.field a.question-title {
+    margin: 0 20px;
+}
+
+.field a.question-title::before {
+    content: "•";
+    margin-right: 10px;
+    display: inline-block;
+}

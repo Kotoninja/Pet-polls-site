@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 class Question(models.Model):
     question_text = models.CharField(max_length=50)
@@ -28,3 +28,7 @@ class Tag(models.Model):
 
     def __str__(self) -> str:
         return self.tag_text
+    
+    def get_absolute_url(self):
+        return reverse("polls:tag_search", kwargs={"tag":self.tag_text})
+    
